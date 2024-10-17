@@ -16,6 +16,7 @@ import Project from './Components/Projects/Project';
 import AddProjectForm from './Components/Projects/AddProjectForm';
 import Preview from './Components/CommonComponent/Preview';
 import Error from './Components/Error/Error';
+import UpdateProject from './Components/Projects/UpdateProject';
 
 
 function App() {
@@ -73,6 +74,10 @@ function App() {
         {
           path: '/project/add',
           element: <AddProjectForm />
+        },
+        {
+          path : '/project/update/:id',
+          element: <UpdateProject/>
         },
         {
           path: '/preview',

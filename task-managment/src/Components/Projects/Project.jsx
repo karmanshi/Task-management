@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import AddProjectForm from './AddProjectForm'
 import { url } from '../Services/ApiEndPoint'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -7,8 +6,8 @@ import { TableComponent } from '../CommonComponent/FullTable'
 import { ProjectColumn } from '../JSON/TableHeadJSON'
 import DeleteButton from '../CommonComponent/DeleteButton'
 import SearchBox from '../CommonComponent/SearchBox'
-import DeleteData from '../CommonComponent/DeleteData'
 import { useNavigate } from 'react-router-dom'
+import AddButton from '../CommonComponent/AddButton'
 
 const Project = () => {
   const navigate = useNavigate()
@@ -68,23 +67,33 @@ const Project = () => {
     {
       label: "Edit",
       className: "text-blue-500",
-      onClick: (row) => toast.success(`Editing ${row.fullName}`),
+      onClick: (id) => navigate(`/project/update/${id}`),
     },
     {
       label: "Delete",
       className: "text-red-500",
-      onClick: (row) =>  IndividualDeleteProject(row),
+      onClick: (id) => handleDelete(id),
     },
   ];
 
-  const IndividualDeleteProject = (row) => {
+  const handleDelete = (id) => {
+    // Show confirmation popup
+    const isConfirmed = window.confirm("Are you sure you want to delete this item?");
+    
+    // If confirmed, proceed with deletion
+    if (isConfirmed) {
+      IndividualDeleteProject(id);
+    }
+  };
+
+  const IndividualDeleteProject = (id) => {
     const token = localStorage.getItem('authToken')
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       }
     }
-    axios.delete(`${url.projectIndividualDeleteApi}${row}/`, config)
+    axios.delete(`${url.projectIndividualDeleteApi}${id}/`, config)
       .then(() => {
         toast.success("Deleted Successfully")
         setDataDeleted(true)
@@ -121,9 +130,7 @@ const Project = () => {
           Project List
         </div>
         <div className='w-full lg:w-auto flex justify-end'>
-          <button className='mt-4 bg-blue-500 font-bold text-white py-3 px-6 rounded-md hover:bg-blue-600 transition duration-150 ease-in-out' onClick={() => { navigate('/project/add') }}>
-            Add Project
-          </button>
+          <AddButton  onClick={() => { navigate('/project/add') }} buttonName="Add Project"/>
         </div>
       </div>
 

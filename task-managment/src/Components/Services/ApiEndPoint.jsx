@@ -4,6 +4,8 @@ export const url = {
     loginApi : `${baseUrl}/auth/login/`,
     updatePasswordApi : `${baseUrl}/user/update-password/`,
     projectGetApi : `${baseUrl}/projects/`,
+    updateProjectGetApi : `${baseUrl}/projects`,
     projectIndividualDeleteApi : `${baseUrl}/projects/`,
+    
     projectDeleteAllApi : `${baseUrl}/projects/delete-all/`
 }
